@@ -6,15 +6,19 @@ edition = "2024"
 [dependencies]
 anyhow = "1.0.103"
 async-std = "1.13.2"
+byteorder = "1.5.0"
 clap = { version = "4.6.1", features = ["derive"] }
 clap_complete = "4.6.5"
 cube_rs = "0.4.7"
+gc-gcm = "0.10.0"
 itertools = "0.15.0"
+paste = "1.0.15"
 regex = "1.12.4"
 serde = { version = "1.0.228", features = ["derive"] }
 strum = "0.28.0"
 strum_macros = "0.28.0"
 szs = "0.3.7"
+thiserror = "2.0.18"
 tokio = { version = "1", features = ["full"] }
 
 [profile.dev]

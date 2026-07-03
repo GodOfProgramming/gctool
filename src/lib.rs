@@ -1,9 +1,12 @@
 pub mod cmd;
+pub mod dol;
+pub mod gcm;
 pub mod util;
 
 use clap::{CommandFactory, Parser, Subcommand};
 use clap_complete::Shell;
 use cmd::{archive::ArchiveCommand, compression::CompressionCommand};
+use thiserror::Error;
 
 #[derive(Parser, Debug)]
 pub struct Args {
@@ -38,5 +41,20 @@ impl Command {
         }
 
         Ok(())
+    }
+}
+
+#[derive(Error, Debug)]
+pub enum GcError {
+    #[error("Could not read {0}-{1} bytes into data")]
+    OutOfRange(usize, usize),
+
+    #[error("Generic Error: {0}")]
+    Generic(String),
+}
+
+impl GcError {
+    pub fn generic(s: impl ToString) -> Self {
+        Self::Generic(s.to_string())
     }
 }

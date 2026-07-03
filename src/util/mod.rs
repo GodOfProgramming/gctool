@@ -1,3 +1,5 @@
+pub mod bytes;
+
 use async_std::{fs, path::Path};
 
 pub async fn ensure_parent(path: impl AsRef<Path>) -> anyhow::Result<()> {
