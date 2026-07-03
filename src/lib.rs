@@ -1,11 +1,9 @@
-pub mod archive;
-pub mod compression;
+pub mod cmd;
 pub mod util;
 
-use archive::ArchiveCommand;
 use clap::{CommandFactory, Parser, Subcommand};
 use clap_complete::Shell;
-use compression::CompressionCommand;
+use cmd::{archive::ArchiveCommand, compression::CompressionCommand};
 
 #[derive(Parser, Debug)]
 pub struct Args {
