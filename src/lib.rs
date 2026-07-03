@@ -1,8 +1,11 @@
-pub mod rarc;
+pub mod archive;
+pub mod compression;
+pub mod util;
 
-use crate::rarc::RarcCommand;
+use archive::ArchiveCommand;
 use clap::{CommandFactory, Parser, Subcommand};
 use clap_complete::Shell;
+use compression::CompressionCommand;
 
 #[derive(Parser, Debug)]
 pub struct Args {
@@ -13,9 +16,13 @@ pub struct Args {
 #[derive(Subcommand, Debug)]
 pub enum Command {
     Complete,
-    Rarc {
+    Compression {
         #[command(subcommand)]
-        command: RarcCommand,
+        command: CompressionCommand,
+    },
+    Archive {
+        #[command(subcommand)]
+        command: ArchiveCommand,
     },
 }
 
@@ -28,7 +35,8 @@ impl Command {
                 tool_name,
                 &mut std::io::stdout(),
             ),
-            Self::Rarc { command } => command.run().await?,
+            Self::Compression { command } => command.run().await?,
+            Self::Archive { command } => command.run().await?,
         }
 
         Ok(())
