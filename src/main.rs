@@ -1,5 +1,5 @@
 use clap::Parser;
-use gctool::Args;
+use gctool::cmd::Args;
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {

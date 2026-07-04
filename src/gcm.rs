@@ -1,9 +1,9 @@
-use gc_gcm::{GcmError, GcmFile};
+use gc_gcm::{File, GcmError, GcmFile};
 use std::ops::{Deref, DerefMut};
 
 use crate::GcError;
 
-pub struct Gcm(GcmFile);
+pub struct Gcm(pub(crate) GcmFile);
 
 impl Deref for Gcm {
     type Target = GcmFile;
@@ -20,8 +20,8 @@ impl DerefMut for Gcm {
 }
 
 impl Gcm {
-    pub fn new(iso_data: Vec<u8>) -> anyhow::Result<Self> {
-        let mut cursor = std::io::Cursor::new(iso_data);
+    pub fn new(iso_data: impl AsRef<[u8]>) -> anyhow::Result<Self> {
+        let mut cursor = std::io::Cursor::new(iso_data.as_ref());
         let file = GcmFile::from_reader(&mut cursor).map_err(|e| match e {
             GcmError::ParseError(error) => GcError::generic(error),
             GcmError::IoError(error) => GcError::generic(error),
